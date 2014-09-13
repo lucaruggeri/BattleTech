@@ -1,0 +1,42 @@
+﻿@using BattleTech.Controllers;
+
+@{
+    ((HomeController))this.ViewContext.Controller).
+}
+
+@{
+    ViewBag.Title = "AttackSimulation";
+}
+
+<h2>Attack Simulation</h2>
+
+@using (Ajax.BeginForm("CalculateAttack", "Home", new AjaxOptions { UpdateTargetId = "ResultBox" }))
+{
+    <form>
+        <br />
+        <br />
+
+        @Html.Label("Attacker attack:")
+        <br />
+        @Html.TextBox("Attack")
+
+        <br />
+        <br />
+
+        @Html.Label("Defender defence:")
+        <br />
+        @Html.TextBox("Defence")
+
+        <br />
+        <br />
+        <input type="submit" value="Attack!" />
+
+        <br />
+        <br />
+        <div id="ResultBox"></div>
+    </form>
+}
+
+
+
+

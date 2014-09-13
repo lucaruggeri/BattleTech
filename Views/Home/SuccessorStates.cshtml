@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "SuccessorStates";
+}
+
+<h2>Successor States</h2>
+
+<ul>
+    @foreach (var item in ViewBag.ssList)
+    {
+        <li>@item.Name</li>
+    }
+</ul>
+
+<br />
+<br />
+@Html.ActionLink("Home page", "BTHome")

@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "BT Home";
+
+    // cover
+    var selectedCover = "..\\RESOURCES\\COVERS\\" + BattleTech.BTCode.GraphicUtilities.SelectCover() + ".jpg";
+
+}
+
+
+<h2>BattleTech MVC Demo - Home Page</h2>
+
+<img id="CoverStrip" src="@selectedCover" height="250" width="1000" />
+
+<ul>
+    <li>
+        @Html.ActionLink("Info", "Info")
+    </li>
+    <li>
+        @*@Html.ActionLink("BattleMechs", "MechsList")*@
+
+
+        @Html.ActionLink("BattleMechs", "MechsList", "Mech") 
+    </li>
+    <li>
+        @Html.ActionLink("Successor States", "SuccessorStates")
+    </li>
+    <li>
+        @Html.ActionLink("Attack simulation", "AttackSimulation")
+    </li>
+</ul>
+

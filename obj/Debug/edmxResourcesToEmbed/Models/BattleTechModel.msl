@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BattleTechModelStoreContainer" CdmEntityContainer="BattleTechEntities">
+    <EntitySetMapping Name="BattleMechs">
+      <EntityTypeMapping TypeName="BattleTechModel.BattleMech">
+        <MappingFragment StoreEntitySet="BattleMechs">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PicturePath" ColumnName="PicturePath" />
+          <ScalarProperty Name="ManufacturerID" ColumnName="ManufacturerID" />
+          <ScalarProperty Name="ProductionYear" ColumnName="ProductionYear" />
+          <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Manufacturers">
+      <EntityTypeMapping TypeName="BattleTechModel.Manufacturer">
+        <MappingFragment StoreEntitySet="Manufacturers">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PicturePath" ColumnName="PicturePath" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MechClasses">
+      <EntityTypeMapping TypeName="BattleTechModel.MechClass">
+        <MappingFragment StoreEntitySet="MechClasses">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MyArmies">
+      <EntityTypeMapping TypeName="BattleTechModel.MyArmy">
+        <MappingFragment StoreEntitySet="MyArmy">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BMID" ColumnName="BMID" />
+          <ScalarProperty Name="Variant" ColumnName="Variant" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="PilotID" ColumnName="PilotID" />
+          <ScalarProperty Name="GeneralStatus" ColumnName="GeneralStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SuccessorStates">
+      <EntityTypeMapping TypeName="BattleTechModel.SuccessorState">
+        <MappingFragment StoreEntitySet="SuccessorStates">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_MechsCount" FunctionName="BattleTechModel.Store.sp_MechsCount" />
+    <FunctionImportMapping FunctionImportName="sp_TableStatistics" FunctionName="BattleTechModel.Store.sp_TableStatistics">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BattleTechModel.sp_TableStatistics_Result">
+          <ScalarProperty Name="TableName" ColumnName="TableName" />
+          <ScalarProperty Name="TableRows" ColumnName="TableRows" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

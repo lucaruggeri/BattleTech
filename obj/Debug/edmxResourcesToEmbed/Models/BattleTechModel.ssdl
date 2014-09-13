@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BattleTechModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BattleMechs">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="PicturePath" Type="varchar" MaxLength="50" />
+    <Property Name="ManufacturerID" Type="int" />
+    <Property Name="ProductionYear" Type="int" />
+    <Property Name="ClassID" Type="int" />
+  </EntityType>
+  <EntityType Name="Manufacturers">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="PicturePath" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="MechClasses">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MyArmy">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="BMID" Type="int" Nullable="false" />
+    <Property Name="Variant" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+    <Property Name="PilotID" Type="int" Nullable="false" />
+    <Property Name="GeneralStatus" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SuccessorStates">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="ImagePath" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <Function Name="sp_MechsCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_TableStatistics" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="BattleTechModelStoreContainer">
+    <EntitySet Name="BattleMechs" EntityType="Self.BattleMechs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Manufacturers" EntityType="Self.Manufacturers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MechClasses" EntityType="Self.MechClasses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MyArmy" EntityType="Self.MyArmy" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SuccessorStates" EntityType="Self.SuccessorStates" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

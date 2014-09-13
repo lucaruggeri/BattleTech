@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BattleTechModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BattleMech">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PicturePath" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ManufacturerID" Type="Int32" />
+    <Property Name="ProductionYear" Type="Int32" />
+    <Property Name="ClassID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Manufacturer">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PicturePath" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="MechClass">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MyArmy">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="BMID" Type="Int32" Nullable="false" />
+    <Property Name="Variant" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="PilotID" Type="Int32" Nullable="false" />
+    <Property Name="GeneralStatus" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SuccessorState">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ImagePath" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityContainer Name="BattleTechEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BattleMechs" EntityType="Self.BattleMech" />
+    <EntitySet Name="Manufacturers" EntityType="Self.Manufacturer" />
+    <EntitySet Name="MechClasses" EntityType="Self.MechClass" />
+    <EntitySet Name="MyArmies" EntityType="Self.MyArmy" />
+    <EntitySet Name="SuccessorStates" EntityType="Self.SuccessorState" />
+    <FunctionImport Name="sp_MechsCount" ReturnType="Collection(Int32)" />
+    <FunctionImport Name="sp_TableStatistics" ReturnType="Collection(BattleTechModel.sp_TableStatistics_Result)" />
+  </EntityContainer>
+  <ComplexType Name="sp_TableStatistics_Result">
+    <Property Type="String" Name="TableName" Nullable="false" MaxLength="128" />
+    <Property Type="Int64" Name="TableRows" Nullable="false" />
+  </ComplexType>
+</Schema>
