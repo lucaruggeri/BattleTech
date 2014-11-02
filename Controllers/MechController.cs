@@ -20,6 +20,15 @@ namespace BattleTech.Controllers
         // context
         BattleTechEntities myContext = new BattleTechEntities();
 
+        public ActionResult MechsListGeneralView()
+        {
+
+            // model
+            var myModel = myContext.viewMechs.ToList();
+
+            return View(myModel);
+        }
+
         public ActionResult MechsList()
         {
 

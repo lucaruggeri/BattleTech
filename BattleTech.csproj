@@ -164,6 +164,7 @@
     <Compile Include="BTCode\GraphicUtilities.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HousesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MechController.cs" />
     <Compile Include="Global.asax.cs">
@@ -188,6 +189,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BattleTechModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Client.cs">
+      <DependentUpon>BattleTechModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Color.cs">
+      <DependentUpon>BattleTechModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\House.cs">
+      <DependentUpon>BattleTechModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Manufacturer.cs">
@@ -199,10 +209,31 @@
     <Compile Include="Models\MyArmy.cs">
       <DependentUpon>BattleTechModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Occupation.cs">
+      <DependentUpon>BattleTechModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Order.cs">
+      <DependentUpon>BattleTechModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderLine.cs">
+      <DependentUpon>BattleTechModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>BattleTechModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_TableStatistics_Result.cs">
       <DependentUpon>BattleTechModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SuccessorState.cs">
+      <DependentUpon>BattleTechModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\usp_Fabrics_Result.cs">
+      <DependentUpon>BattleTechModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\viewHous.cs">
+      <DependentUpon>BattleTechModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\viewMech.cs">
       <DependentUpon>BattleTechModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -316,9 +347,12 @@
     <Content Include="Views\Mech\Details.cshtml" />
     <Content Include="Views\Mech\Create.cshtml" />
     <Content Include="Views\Mech\Delete.cshtml" />
+    <Content Include="Views\Mech\MechsListGeneralView.cshtml" />
+    <Content Include="Views\Home\Houses.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="RESOURCES\LOGOS\HOUSES\" />
     <Folder Include="RESOURCES\PICS\" />
   </ItemGroup>
   <ItemGroup>

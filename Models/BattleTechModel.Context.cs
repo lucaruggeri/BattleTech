@@ -32,6 +32,15 @@ namespace BattleTech.Models
         public virtual DbSet<MechClass> MechClasses { get; set; }
         public virtual DbSet<MyArmy> MyArmies { get; set; }
         public virtual DbSet<SuccessorState> SuccessorStates { get; set; }
+        public virtual DbSet<viewMech> viewMechs { get; set; }
+        public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<Color> Colors { get; set; }
+        public virtual DbSet<House> Houses { get; set; }
+        public virtual DbSet<Occupation> Occupations { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderLine> OrderLines { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<viewHous> viewHouses { get; set; }
     
         public virtual ObjectResult<Nullable<int>> sp_MechsCount()
         {
@@ -41,6 +50,32 @@ namespace BattleTech.Models
         public virtual ObjectResult<sp_TableStatistics_Result> sp_TableStatistics()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_TableStatistics_Result>("sp_TableStatistics");
+        }
+    
+        public virtual ObjectResult<Nullable<int>> sp_CreateTestTable(Nullable<int> numberOfRows, string tableName)
+        {
+            var numberOfRowsParameter = numberOfRows.HasValue ?
+                new ObjectParameter("numberOfRows", numberOfRows) :
+                new ObjectParameter("numberOfRows", typeof(int));
+    
+            var tableNameParameter = tableName != null ?
+                new ObjectParameter("tableName", tableName) :
+                new ObjectParameter("tableName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_CreateTestTable", numberOfRowsParameter, tableNameParameter);
+        }
+    
+        public virtual ObjectResult<usp_Fabrics_Result> usp_Fabrics(Nullable<int> createClients, Nullable<int> createOrders)
+        {
+            var createClientsParameter = createClients.HasValue ?
+                new ObjectParameter("CreateClients", createClients) :
+                new ObjectParameter("CreateClients", typeof(int));
+    
+            var createOrdersParameter = createOrders.HasValue ?
+                new ObjectParameter("CreateOrders", createOrders) :
+                new ObjectParameter("CreateOrders", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_Fabrics_Result>("usp_Fabrics", createClientsParameter, createOrdersParameter);
         }
     }
 }

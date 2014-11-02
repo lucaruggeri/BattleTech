@@ -10,6 +10,19 @@
         <EntityTypeShape EntityType="BattleTechModel.MechClass" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BattleTechModel.MyArmy" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BattleTechModel.SuccessorState" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BattleTechModel.viewMech" Width="1.5" PointX="5.375" PointY="3.75" />
+        <EntityTypeShape EntityType="BattleTechModel.Client" Width="1.5" PointX="7.75" PointY="6.75" />
+        <EntityTypeShape EntityType="BattleTechModel.Color" Width="1.5" PointX="7.5" PointY="0.5" />
+        <EntityTypeShape EntityType="BattleTechModel.House" Width="1.5" PointX="0.5" PointY="7.5" />
+        <EntityTypeShape EntityType="BattleTechModel.Occupation" Width="1.5" PointX="5.5" PointY="8.375" />
+        <EntityTypeShape EntityType="BattleTechModel.Order" Width="1.5" PointX="10" PointY="8" />
+        <EntityTypeShape EntityType="BattleTechModel.OrderLine" Width="1.5" PointX="12.25" PointY="8" />
+        <EntityTypeShape EntityType="BattleTechModel.Product" Width="1.5" PointX="10" PointY="4" />
+        <AssociationConnector Association="BattleTechModel.FK_Client_Occupation" />
+        <AssociationConnector Association="BattleTechModel.fk_Order_ClientId" />
+        <AssociationConnector Association="BattleTechModel.fk_OrderLine_OrderId" />
+        <AssociationConnector Association="BattleTechModel.fk_OrderLine_ProductId" />
+        <EntityTypeShape EntityType="BattleTechModel.viewHous" Width="1.5" PointX="10.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

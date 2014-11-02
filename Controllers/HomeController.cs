@@ -13,17 +13,28 @@ namespace BattleTech.Controllers
 {
     public class HomeController : Controller
     {
+        // context
+        BattleTechEntities myContext = new BattleTechEntities();
 
+        // HOME
         public ActionResult BTHome()
         {
             return View();
         }
 
+        // lista HOUSES
+        public ActionResult Houses()
+        {
+            var hs = myContext.viewHouses.ToList();
+
+            ViewBag.hsList = hs;
+
+            return View();
+        }
+
+        // lista SUCCESSOR STATES
         public ActionResult SuccessorStates()
         {
-
-            BattleTechEntities myContext = new BattleTechEntities();
-
             var ss = myContext.SuccessorStates.ToList();
 
             ViewBag.ssList = ss;
@@ -31,12 +42,13 @@ namespace BattleTech.Controllers
             return View();
         }
 
-
+        // ATTACK SIMULATION
         public ActionResult AttackSimulation()
         {
             return View();
         }
 
+        // CALCULATE ATTACK
         [HttpPost]
         public ActionResult CalculateAttack(FormCollection form)
         {
@@ -52,9 +64,11 @@ namespace BattleTech.Controllers
         }
 
 
-
-
-
+        // --------------------------------------------------------------- OLD
+        // --------------------------------------------------------------- OLD
+        // --------------------------------------------------------------- OLD
+        // --------------------------------------------------------------- OLD
+        // --------------------------------------------------------------- OLD
         // --------------------------------------------------------------- OLD
         public ActionResult Index()
         {

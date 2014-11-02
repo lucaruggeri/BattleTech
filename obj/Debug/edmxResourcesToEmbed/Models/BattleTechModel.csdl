@@ -54,9 +54,200 @@
     <EntitySet Name="SuccessorStates" EntityType="Self.SuccessorState" />
     <FunctionImport Name="sp_MechsCount" ReturnType="Collection(Int32)" />
     <FunctionImport Name="sp_TableStatistics" ReturnType="Collection(BattleTechModel.sp_TableStatistics_Result)" />
+    <EntitySet Name="viewMechs" EntityType="BattleTechModel.viewMech" />
+    <EntitySet Name="Clients" EntityType="BattleTechModel.Client" />
+    <EntitySet Name="Colors" EntityType="BattleTechModel.Color" />
+    <EntitySet Name="Houses" EntityType="BattleTechModel.House" />
+    <EntitySet Name="Occupations" EntityType="BattleTechModel.Occupation" />
+    <EntitySet Name="Orders" EntityType="BattleTechModel.Order" />
+    <EntitySet Name="OrderLines" EntityType="BattleTechModel.OrderLine" />
+    <EntitySet Name="Products" EntityType="BattleTechModel.Product" />
+    <AssociationSet Name="FK_Client_Occupation" Association="BattleTechModel.FK_Client_Occupation">
+      <End Role="Occupation" EntitySet="Occupations" />
+      <End Role="Client" EntitySet="Clients" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Order_ClientId" Association="BattleTechModel.fk_Order_ClientId">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="fk_OrderLine_OrderId" Association="BattleTechModel.fk_OrderLine_OrderId">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="OrderLine" EntitySet="OrderLines" />
+    </AssociationSet>
+    <AssociationSet Name="fk_OrderLine_ProductId" Association="BattleTechModel.fk_OrderLine_ProductId">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="OrderLine" EntitySet="OrderLines" />
+    </AssociationSet>
+    <FunctionImport Name="sp_CreateTestTable" ReturnType="Collection(Int32)">
+      <Parameter Name="numberOfRows" Mode="In" Type="Int32" />
+      <Parameter Name="tableName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="usp_Fabrics" ReturnType="Collection(BattleTechModel.usp_Fabrics_Result)">
+      <Parameter Name="CreateClients" Mode="In" Type="Int32" />
+      <Parameter Name="CreateOrders" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="viewHouses" EntityType="BattleTechModel.viewHous" />
   </EntityContainer>
   <ComplexType Name="sp_TableStatistics_Result">
     <Property Type="String" Name="TableName" Nullable="false" MaxLength="128" />
     <Property Type="Int64" Name="TableRows" Nullable="false" />
   </ComplexType>
+  <EntityType Name="viewMech">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="ClassName" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="PicturePath" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ProductionYear" Type="Int32" />
+    <Property Name="ClassName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="ClientId" />
+    </Key>
+    <Property Name="ClientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+    <Property Name="CreditRating" Type="Double" />
+    <Property Name="XCode" Type="String" MaxLength="7" FixedLength="true" Unicode="false" />
+    <Property Name="OccupationId" Type="Int32" />
+    <Property Name="TelephoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Street1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Street2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ZipCode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Longitude" Type="Double" />
+    <Property Name="Latitude" Type="Double" />
+    <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Occupation" Relationship="BattleTechModel.FK_Client_Occupation" FromRole="Client" ToRole="Occupation" />
+    <NavigationProperty Name="Orders" Relationship="BattleTechModel.fk_Order_ClientId" FromRole="Client" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Color">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Value" Type="String" Nullable="false" />
+  </EntityType>
+  <EntityType Name="House">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="LogoPath" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ColorID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Occupation">
+    <Key>
+      <PropertyRef Name="OccupationId" />
+    </Key>
+    <Property Name="OccupationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OccupationName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Clients" Relationship="BattleTechModel.FK_Client_Occupation" FromRole="Occupation" ToRole="Client" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="ClientId" Type="Int32" />
+    <Property Name="OrderDate" Type="DateTime" Precision="3" />
+    <Property Name="OrderTotal" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="OrderStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="Client" Relationship="BattleTechModel.fk_Order_ClientId" FromRole="Order" ToRole="Client" />
+    <NavigationProperty Name="OrderLines" Relationship="BattleTechModel.fk_OrderLine_OrderId" FromRole="Order" ToRole="OrderLine" />
+  </EntityType>
+  <EntityType Name="OrderLine">
+    <Key>
+      <PropertyRef Name="OrderId" />
+      <PropertyRef Name="LineNumber" />
+    </Key>
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="LineNumber" Type="Int32" Nullable="false" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="Qty" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+    <Property Name="LineTotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <NavigationProperty Name="Order" Relationship="BattleTechModel.fk_OrderLine_OrderId" FromRole="OrderLine" ToRole="Order" />
+    <NavigationProperty Name="Product" Relationship="BattleTechModel.fk_OrderLine_ProductId" FromRole="OrderLine" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductName" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="Decimal" Precision="10" Scale="4" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="Stock" Type="Decimal" Precision="18" Scale="3" />
+    <NavigationProperty Name="OrderLines" Relationship="BattleTechModel.fk_OrderLine_ProductId" FromRole="Product" ToRole="OrderLine" />
+  </EntityType>
+  <Association Name="FK_Client_Occupation">
+    <End Type="BattleTechModel.Occupation" Role="Occupation" Multiplicity="0..1" />
+    <End Type="BattleTechModel.Client" Role="Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Occupation">
+        <PropertyRef Name="OccupationId" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="OccupationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Order_ClientId">
+    <End Type="BattleTechModel.Client" Role="Client" Multiplicity="0..1" />
+    <End Type="BattleTechModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ClientId" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="ClientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_OrderLine_OrderId">
+    <End Type="BattleTechModel.Order" Role="Order" Multiplicity="1" />
+    <End Type="BattleTechModel.OrderLine" Role="OrderLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="OrderId" />
+      </Principal>
+      <Dependent Role="OrderLine">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_OrderLine_ProductId">
+    <End Type="BattleTechModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="BattleTechModel.OrderLine" Role="OrderLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="OrderLine">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="usp_Fabrics_Result">
+    <Property Type="String" Name="Table" Nullable="false" MaxLength="10" />
+    <Property Type="Int32" Name="Count" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="viewHous">
+    <Key>
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="ColorValue" />
+    </Key>
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="LogoPath" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ColorValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
 </Schema>

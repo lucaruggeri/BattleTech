@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Houses";
+}
+
+<h2>Houses</h2>
+
+<ul>
+    @foreach (var item in ViewBag.hsList)
+    {
+        <li> <div style="color:#@item.ColorValue"> <img width="50" height="50" src="~/RESOURCES/LOGOS/HOUSES/@item.LogoPath" />  @item.Name </div> </li>
+    }
+</ul>
+
+<br />
+<br />
+@Html.ActionLink("Home page", "BTHome")

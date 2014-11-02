@@ -11,6 +11,45 @@
     <Property Name="ProductionYear" Type="int" />
     <Property Name="ClassID" Type="int" />
   </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="ClientId" />
+    </Key>
+    <Property Name="ClientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="40" />
+    <Property Name="MiddleName" Type="varchar" MaxLength="40" />
+    <Property Name="LastName" Type="varchar" MaxLength="40" />
+    <Property Name="Gender" Type="char" MaxLength="1" />
+    <Property Name="DateOfBirth" Type="datetime" />
+    <Property Name="CreditRating" Type="float" />
+    <Property Name="XCode" Type="char" MaxLength="7" />
+    <Property Name="OccupationId" Type="int" />
+    <Property Name="TelephoneNumber" Type="varchar" MaxLength="20" />
+    <Property Name="Street1" Type="varchar" MaxLength="100" />
+    <Property Name="Street2" Type="varchar" MaxLength="100" />
+    <Property Name="City" Type="varchar" MaxLength="100" />
+    <Property Name="ZipCode" Type="varchar" MaxLength="15" />
+    <Property Name="Longitude" Type="float" />
+    <Property Name="Latitude" Type="float" />
+    <Property Name="Notes" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="Colors">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Value" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Houses">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="LogoPath" Type="varchar" MaxLength="100" />
+    <Property Name="ColorID" Type="int" />
+  </EntityType>
   <EntityType Name="Manufacturers">
     <Key>
       <PropertyRef Name="ID" />
@@ -38,6 +77,44 @@
     <Property Name="PilotID" Type="int" Nullable="false" />
     <Property Name="GeneralStatus" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Occupation">
+    <Key>
+      <PropertyRef Name="OccupationId" />
+    </Key>
+    <Property Name="OccupationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OccupationName" Type="varchar" MaxLength="60" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="ClientId" Type="int" />
+    <Property Name="OrderDate" Type="datetime" />
+    <Property Name="OrderTotal" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="OrderStatus" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="OrderLine">
+    <Key>
+      <PropertyRef Name="OrderId" />
+      <PropertyRef Name="LineNumber" />
+    </Key>
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="LineNumber" Type="int" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="Qty" Type="numeric" Precision="18" Scale="3" Nullable="false" />
+    <Property Name="LineTotal" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductName" Type="varchar" MaxLength="80" />
+    <Property Name="Price" Type="smallmoney" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="Stock" Type="numeric" Precision="18" Scale="3" />
+  </EntityType>
   <EntityType Name="SuccessorStates">
     <Key>
       <PropertyRef Name="ID" />
@@ -46,13 +123,133 @@
     <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="ImagePath" Type="varchar" MaxLength="100" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'BattleTech.dbo.viewHouses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="viewHouses">
+    <Key>
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="ColorValue" />
+    </Key>
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="LogoPath" Type="varchar" MaxLength="100" />
+    <Property Name="ColorValue" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'BattleTech.dbo.viewMechs' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="viewMechs">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="ClassName" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="PicturePath" Type="varchar" MaxLength="50" />
+    <Property Name="ProductionYear" Type="int" />
+    <Property Name="ClassName" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Client_Occupation">
+    <End Role="Occupation" Type="Self.Occupation" Multiplicity="0..1" />
+    <End Role="Client" Type="Self.Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Occupation">
+        <PropertyRef Name="OccupationId" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="OccupationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Order_ClientId">
+    <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ClientId" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="ClientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_OrderLine_OrderId">
+    <End Role="Order" Type="Self.Order" Multiplicity="1" />
+    <End Role="OrderLine" Type="Self.OrderLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="OrderId" />
+      </Principal>
+      <Dependent Role="OrderLine">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_OrderLine_ProductId">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="OrderLine" Type="Self.OrderLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="OrderLine">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="sp_CreateTestTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="numberOfRows" Type="int" Mode="In" />
+    <Parameter Name="tableName" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="sp_MechsCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="sp_TableStatistics" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="usp_Fabrics" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CreateClients" Type="int" Mode="In" />
+    <Parameter Name="CreateOrders" Type="int" Mode="In" />
+  </Function>
   <EntityContainer Name="BattleTechModelStoreContainer">
     <EntitySet Name="BattleMechs" EntityType="Self.BattleMechs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Colors" EntityType="Self.Colors" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Houses" EntityType="Self.Houses" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Manufacturers" EntityType="Self.Manufacturers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MechClasses" EntityType="Self.MechClasses" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MyArmy" EntityType="Self.MyArmy" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Occupation" EntityType="Self.Occupation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderLine" EntityType="Self.OrderLine" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SuccessorStates" EntityType="Self.SuccessorStates" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="viewHouses" EntityType="Self.viewHouses" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [viewHouses].[Name] AS [Name], 
+    [viewHouses].[LogoPath] AS [LogoPath], 
+    [viewHouses].[ColorValue] AS [ColorValue]
+    FROM [dbo].[viewHouses] AS [viewHouses]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="viewMechs" EntityType="Self.viewMechs" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [viewMechs].[ID] AS [ID], 
+    [viewMechs].[Name] AS [Name], 
+    [viewMechs].[PicturePath] AS [PicturePath], 
+    [viewMechs].[ProductionYear] AS [ProductionYear], 
+    [viewMechs].[ClassName] AS [ClassName]
+    FROM [dbo].[viewMechs] AS [viewMechs]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Client_Occupation" Association="Self.FK_Client_Occupation">
+      <End Role="Occupation" EntitySet="Occupation" />
+      <End Role="Client" EntitySet="Client" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Order_ClientId" Association="Self.fk_Order_ClientId">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="fk_OrderLine_OrderId" Association="Self.fk_OrderLine_OrderId">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="OrderLine" EntitySet="OrderLine" />
+    </AssociationSet>
+    <AssociationSet Name="fk_OrderLine_ProductId" Association="Self.fk_OrderLine_ProductId">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="OrderLine" EntitySet="OrderLine" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>
